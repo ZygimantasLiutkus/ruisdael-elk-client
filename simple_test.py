@@ -1,5 +1,4 @@
-import pytest
-from main import *
+from main import print_hi
 
 
 def test():
