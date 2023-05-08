@@ -23,7 +23,7 @@ before_script:
 lint:
   stage: linting
   script:
-    - ruff check *.py
+    - ruff check *.py --fix
 
 test:
   stage: test
