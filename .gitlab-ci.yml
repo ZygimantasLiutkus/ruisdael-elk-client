@@ -15,6 +15,7 @@ stages:
 before_script:
   - python --version
   - pip install virtualenv
+  - pip install -r requirements.txt
   - virtualenv venv
   - source venv/bin/activate
 
@@ -28,6 +29,6 @@ lint:
 test:
   stage: test
   script:
-    - make test
+    - pytest -v
   artifacts:
      when: always
