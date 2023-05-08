@@ -5,4 +5,4 @@ build-backend = "setuptools.build_meta"
 [metadata]
 name = "ruisdael-elk-client"
 version = 0.1.0
-author = CSE2000-Group-12B
+author = "CSE2000-Group-12B"
