@@ -1,3 +1,6 @@
+import pytest
 from main import *
 
-assert print_hi('world') == 'Hello, world'
+
+def test():
+    assert print_hi('world') == 'Hello, world'
