@@ -1,4 +1,9 @@
 # This is a sample Python script.
+import threading
+import time
+
+import Collector
+
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -13,4 +18,13 @@ def print_hi(name):
 if __name__ == '__main__':
     print_hi('PyCharm')
 
+collector = Collector.Collector()
+
+res = collector.collect()
+
+while True:
+    print(collector.collect())
+    time.sleep(5)
+
+# threading.Timer(5.0, collector.collect()).start()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
