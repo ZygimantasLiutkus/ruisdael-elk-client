@@ -1,6 +1,6 @@
 import os
 import psutil
-from datetime import datetime, timezone
+from datetime import datetime, timedelta
 
 
 class Collector:
@@ -30,6 +30,7 @@ class Collector:
         mainmem = psutil.disk_usage('/')[3]
         # Returns cpu utilization as percentage over time since last call of this function.
         cpu = psutil.cpu_percent()
+        print(datetime.now())
         return {'RAM':ram,
                 'storage':mainmem,
                 'CPU': cpu,

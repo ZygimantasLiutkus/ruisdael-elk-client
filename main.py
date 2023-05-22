@@ -15,9 +15,8 @@ def main():
     # client.delete(index="metric_clone",id="WRLg9CiKQoqcIMtxinW2fA")
     print(client.info())
     collector = Collector.Collector()
-
     while True:
-        print(elasticSearch.send_data(client, "metric_clone2", collector.collect()))
+        print(elasticSearch.send_data(client, "metric_clone", collector.collect()))
         time.sleep(5)
 
 
