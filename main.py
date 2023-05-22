@@ -1,11 +1,12 @@
 # This is a sample Python script.
 from dotenv import load_dotenv
-import threading
 import time
-import Collector
+import collector
+import elasticSearch
+
+
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import elasticSearch
 
 def main():
     # loads the .env into the environment, so the next functions can use the variables inside the .env
@@ -14,9 +15,10 @@ def main():
     client = elasticSearch.start_client()
     # client.delete(index="metric_clone",id="WRLg9CiKQoqcIMtxinW2fA")
     print(client.info())
-    collector = Collector.Collector()
+    col = collector.Collector()
+
     while True:
-        print(elasticSearch.send_data(client, "metric_clone", collector.collect()))
+        print(elasticSearch.send_data(client, "metric_clone2", col.collect()))
         time.sleep(5)
 
 

@@ -1,2 +1,11 @@
+### PyCharm ###
 .idea
+
+### pytest files ###
+/.pytest_cache
+/htmlcov
+.coverage
+
 .env
+/venv
+__pycache__
