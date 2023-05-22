@@ -1,0 +1,33 @@
+image: python:3.9-bullseye
+
+stages:
+  - linting
+  - test
+
+# variables:
+#   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+# cache:
+#   paths:
+#     - .cache/pip
+#     - venv/
+
+before_script:
+  - python --version
+  - pip install virtualenv
+  - pip install -r requirements.txt
+  - pip install ruff
+  - virtualenv venv
+  - source venv/bin/activate
+
+lint:
+  stage: linting
+  script:
+    - ruff check *.py --fix
+
+test:
+  stage: test
+  script:
+    - pytest -v
+  artifacts:
+     when: always

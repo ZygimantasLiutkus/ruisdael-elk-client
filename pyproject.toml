@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[metadata]
+name = "ruisdael-elk-client"
+version = "0.1.0"
+authors = [
+    "Cas Ebels <C.N.Ebels@student.tudelft.nl>",
+    "Dean Polimac <D.Polimac@student.tudelft.nl>",
+    "Erfan Mozafari <E.Mozafari@student.tudelft.nl>",
+    "Quinten Van Opstal <Q.M.F.VanOpstal-1@student.tudelft.nl>",
+    "Žygis Liutkus <Liutkus@student.tudelft.nl>"
+]
