@@ -4,11 +4,14 @@ import psutil
 
 class Collector:
     def __init__(self):
-        self.cpu_load = psutil.cpu_percent()
-        self.num_of_cpus = os.cpu_count()
         return
 
     def collect(self):
+        '''
+        This function collects data about the system and returns it as a dictionary
+        to be sent to elasticsearch.
+        :return: Dictionary of labeled system data
+        '''
         # An array of information about the RAM of the device.
         # Index 0 contains the total size of memory,
         # index 1 contains the size of available memory,
