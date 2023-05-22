@@ -1,5 +1,6 @@
 import os
 import psutil
+from datetime import datetime, timezone
 
 
 class Collector:
@@ -28,4 +29,5 @@ class Collector:
         cpu = psutil.cpu_percent()
         return {'RAM':ram,
                 'storage':mainmem,
-                'CPU': cpu}
+                'CPU': cpu,
+                '@timestamp': datetime.now()}

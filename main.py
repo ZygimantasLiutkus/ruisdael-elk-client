@@ -12,7 +12,14 @@ def main():
     load_dotenv()
     # Connects to the elastic server
     client = elasticSearch.start_client()
+    # client.delete(index="metric_clone",id="WRLg9CiKQoqcIMtxinW2fA")
     print(client.info())
+    collector = Collector.Collector()
+
+    while True:
+        print(elasticSearch.send_data(client, "metric_clone2", collector.collect()))
+        time.sleep(5)
+
 
 
 # Press the green button in the gutter to run the script.

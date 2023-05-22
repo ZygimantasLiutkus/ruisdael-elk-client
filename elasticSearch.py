@@ -1,5 +1,8 @@
+
 from elasticsearch import Elasticsearch
 import os
+from datetime import datetime
+
 
 
 def start_client():
@@ -27,6 +30,6 @@ def send_data(client, index, document):
     """
     return client.index(
         index= index,
-        document=document
+        document=document,
         )
 
