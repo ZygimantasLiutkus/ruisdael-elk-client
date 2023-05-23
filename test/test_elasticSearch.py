@@ -47,5 +47,19 @@ class StartClientTests(TestCase):
 
         mock_elastic.index.assert_called_with(index= index, document=document)
 
+    def test_create_new_index(self):
+        mock_elastic = mock.MagicMock()
+        mock_return_create = mock.MagicMock()
+        mock_elastic.indices.create.return_value = mock_return_create
+        index = "index"
+        mappings = {
+            "mappings": {
+                "properties": {}
+            }
+        }
 
+        elasticSearch.create_index(mock_elastic, index, mappings)
 
+        mock_elastic.indices.create.assert_called_once()
+
+        mock_elastic.indices.create.assert_called_with(index=index, body=mappings)
