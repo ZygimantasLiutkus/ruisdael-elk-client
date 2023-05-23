@@ -1,7 +1,5 @@
-
 from elasticsearch import Elasticsearch
 import os
-
 
 
 def start_client():
@@ -21,6 +19,19 @@ def start_client():
         basic_auth=("elastic", os.getenv('ELASTIC_PASSWORD'))
     )
 
+
+def create_index(client, index, mappings):
+    """
+    Creates an index on the given elastic search instance
+    where data can be sent.
+    :param client: The elastic search connection
+    :param index: The index which will be created
+    :param mappings: The index specification mappings
+    :return: The response of the request
+    """
+    return client.indices.create(index=index, body=mappings)
+
+
 def send_data(client, index, document):
     """
     This method adds the provided data to the given index
@@ -30,8 +41,8 @@ def send_data(client, index, document):
     :param document: The data that needs to be appended
     :return: the response of the request
     """
-    return client.index(
-        index= index,
-        document=document,
-        )
 
+    return client.index(
+        index=index,
+        document=document,
+    )

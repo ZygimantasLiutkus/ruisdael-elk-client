@@ -53,7 +53,7 @@ class TestCollection(TestCase):
 
     @mock.patch("collector.datetime")
     def test_mock_datetime(self, lib_mock):
-        lib_mock.now = mock.MagicMock(return_value=mock_time)
+        lib_mock.utcnow().strftime = mock.MagicMock(return_value=mock_time)
 
         col = collector.Collector()
 

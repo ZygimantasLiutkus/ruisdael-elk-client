@@ -1,5 +1,7 @@
 import psutil
+import os
 from datetime import datetime
+from geopy.geocoders import Nominatim
 
 
 class Collector:
@@ -10,10 +12,10 @@ class Collector:
         :param update_delay: the frequency of how often data will be
         collected (seconds). In other words, how often the collect function
         will be called.
-        :param old_bytes_sent: used for measuring throughput. Will be compared
+        old_bytes_sent: used for measuring throughput. Will be compared
         with a value of bytes sent after the update delay to get average upload
         speed per second.
-        :param old_bytes_rec: used for measuring throughput. Will be compared
+        old_bytes_rec: used for measuring throughput. Will be compared
         with a value of bytes received after the update delay to get average
         download speed per second.
         """
@@ -38,23 +40,27 @@ class Collector:
         # Network usage parameters
         io = psutil.net_io_counters()
         sent, rec = io.bytes_sent, io.bytes_recv
-
+        # Geolocation of the device (address taken from the .env file)
+        loc = Nominatim(user_agent="GetLoc").geocode(os.getenv('LOCATION'))
+        print(datetime.now())
         # Dictionary containing all wanted data
-        data = {'RAM.total': ram[0],                    # B(ytes)
-                'RAM.available': ram[1],                # B
-                'RAM.used.perc': ram[2],                # %
-                'RAM.used.bytes': ram[3],               # B
-                'RAM.free': ram[4],                     # B
-                'storage.total': mainmem[0],            # B
-                'storage.used.bytes': mainmem[1],       # B
-                'storage.free': mainmem[2],             # B
-                'storage.used.perc': mainmem[3],        # %
-                'CPU': cpu,                             # %
-                'upload.size': sent,                    # B
-                'download.size': rec,                   # B
-                'upload.speed': (sent-self.old_bytes_sent)/self.update_delay,   # B/s
-                'download.speed': (rec-self.old_bytes_rec)/self.update_delay,   # B/s
-                '@timestamp': datetime.now()}           # datetime.datetime
+        data = {'RAM.total': ram[0],  # B(ytes)
+                'RAM.available': ram[1],  # B
+                'RAM.used.perc': ram[2],  # %
+                'RAM.used.bytes': ram[3],  # B
+                'RAM.free': ram[4],  # B
+                'storage.total': mainmem[0],  # B
+                'storage.used.bytes': mainmem[1],  # B
+                'storage.free': mainmem[2],  # B
+                'storage.used.perc': mainmem[3],  # %
+                'CPU': cpu,  # %
+                'upload.size': sent,  # B
+                'download.size': rec,  # B
+                'upload.speed': (sent - self.old_bytes_sent) / self.update_delay,  # B/s
+                'download.speed': (rec - self.old_bytes_rec) / self.update_delay,  # B/s
+                '@timestamp': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
+                'location': [loc.longitude, loc.latitude]
+                }
 
         # Reset old values of network input/output for later computations of throughput.
         self.old_bytes_sent = sent

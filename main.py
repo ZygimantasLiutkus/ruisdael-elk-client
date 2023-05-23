@@ -13,9 +13,27 @@ def main():
     # client.delete(index="metric_clone",id="WRLg9CiKQoqcIMtxinW2fA")
     print(client.info())
     col = collector.Collector()
+    index = "metric_clone"
+
+    # Uncomment line bellow to delete contents of the index and recreate
+    # the index with selected name before sending data to it.
+    # client.options(ignore_status=[400, 404]).indices.delete(index=index)
+
+    if not client.indices.exists(index=index):
+        mappings = {
+            "mappings": {
+                "properties": {
+                    "location": {
+                        "type": "geo_point"
+                    }
+                }
+            }
+        }
+
+        print(elasticSearch.create_index(client, index, mappings))
 
     while True:
-        print(elasticSearch.send_data(client, "metric_clone2", col.collect()))
+        print(elasticSearch.send_data(client, index, col.collect()))
         time.sleep(5)
 
 
