@@ -1,12 +1,13 @@
 
 from elasticsearch import Elasticsearch
 import os
-from datetime import datetime
 
 
 
 def start_client():
-    """Creates a connection to elastic search, collecting the fingerprint and password from the .env
+    """
+    Creates a connection to elastic search, collecting
+    the fingerprint and password from the .env
 
     Returns
     A client connected to the elastic search
@@ -22,7 +23,8 @@ def start_client():
 
 def send_data(client, index, document):
     """
-    This method adds the provided data to the given index on the given elastic search instance
+    This method adds the provided data to the given index
+    on the given elastic search instance
     :param client: The elastic search connection
     :param index: The index to which the data needs to be appended
     :param document: The data that needs to be appended
