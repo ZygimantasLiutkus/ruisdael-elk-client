@@ -7,6 +7,8 @@ mock_vm = namedtuple("mock_vm", ["a", "b", "c", "d", "e"])
 mock_du = namedtuple("mock_du", ["a", "b", "c", "d"])
 mock_nioc = namedtuple("mock_nioc", ["bytes_sent", "bytes_recv"])
 mock_time = "Current time"
+mock_geocode = namedtuple("mock_geocode", "geocode")
+mock_location = namedtuple("mock_location", ["latitude", "longitude"])
 class TestCollection(TestCase):
     def test_constructor(self):
         col = collector.Collector()
@@ -62,3 +64,16 @@ class TestCollection(TestCase):
         lib_mock.now.assert_called_once()
 
         assert res['@timestamp'] == mock_time
+
+    @mock.patch("collector.Nominatim")
+    def test_mock_location(self, lib_mock):
+        location = mock.MagicMock(return_value=mock_location(1, 2))
+        lib_mock.return_value = mock_geocode(location)
+
+        col = collector.Collector()
+
+        res = col.collect()
+
+        lib_mock.assert_called_with(user_agent="GetLoc")
+
+        assert res['location'] == [2, 1]
