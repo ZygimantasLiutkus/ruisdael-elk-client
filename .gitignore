@@ -6,6 +6,7 @@
 /htmlcov
 .coverage
 
+.env.j2
 .env
 /venv
 __pycache__
