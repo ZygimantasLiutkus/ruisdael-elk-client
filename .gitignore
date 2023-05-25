@@ -7,6 +7,5 @@
 .coverage
 
 .env
-.env.template.j2
 /venv
 __pycache__
