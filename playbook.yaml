@@ -1,0 +1,22 @@
+---
+- name: Installing the monitoring software
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: clone gitlab directory
+      git:
+        repo: https://{{token_name}}:{{access_token}}@{{gitlab_address}}
+        dest: /bin/monitoring
+      become: true
+
+    - name: add the .env with the right values
+      template:
+        src: .env.template.j2
+        dest: /bin/monitoring/.env
+
+    - name: add the main method to CRON
+      ansible.builtin.cron:
+        name: "Monitoring software"
+        special_time: reboot
+        job: "/bin/monitoring/ruisdael-elk-client/main.py"
+

@@ -12,3 +12,8 @@ authors = [
     "Quinten Van Opstal <Q.M.F.VanOpstal-1@student.tudelft.nl>",
     "Žygis Liutkus <Liutkus@student.tudelft.nl>"
 ]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
