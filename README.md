@@ -5,6 +5,10 @@
 ## Getting started
 
 To install this software you need to run the playbook.yaml with ansible targeting the host on which you wish to install the software.
+You can run this playbook with the folowing command
+```
+sudo ansible-playbook -i inventory.yaml install_playbook.yaml
+```
 
 ## Add your files
 
