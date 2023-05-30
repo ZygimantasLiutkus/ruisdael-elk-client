@@ -1,0 +1,8 @@
+all:
+  hosts:
+      localhost:
+  vars:
+    elastic_password: iFNywNQNuNtq4gPuROhV
+    elastic_url: 10.0.0.24:9200
+    elastic_ca_fingerprint: D9EE3EEB9692CEF90819771A68B3A437A6F5482E9FE9E87220DC05EE98D976D1
+    kibana_url: 10.0.0.25:5601
