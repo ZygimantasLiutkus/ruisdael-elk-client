@@ -1,7 +1,6 @@
 ---
 - name: Installing the monitoring software
-  hosts: localhost
-  connection: local
+  hosts: all
   tasks:
     - name: clone gitlab directory
       git:
@@ -13,17 +12,34 @@
       template:
         src: .env.template.j2
         dest: /bin/monitoring/.env
+      become: true
 
-    - name: add the main method to CRON
-      ansible.builtin.cron:
-        name: "Monitoring software"
-        special_time: reboot
-        job: "/bin/monitoring/main.py"
+    - name: Install pip3, to install the requirements
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+      become: true
 
     - name: install the requirements
       ansible.builtin.pip:
         requirements: "/bin/monitoring/requirements.txt"
+      become: true
 
-    - name: start the application
-      command:  "python3 /bin/monitoring/main.py"
+    - name: add a service for the program
+      template:
+        src: collector.service.j2
+        dest: /etc/systemd/system/collector.service
+      become: true
+
+    - name: enable the service
+      ansible.builtin.systemd:
+        name: collector
+        enabled: true
+      become: true
+
+    - name: start the service
+      ansible.builtin.systemd:
+        name: collector
+        state: started
+      become: true
 ...

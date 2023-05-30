@@ -5,10 +5,20 @@
 ## Getting started
 
 To install this software you need to run the playbook.yaml with ansible targeting the host on which you wish to install the software.
-You can run this playbook with the folowing command
+You need root access on the target machine to execute the playbook successfully.
+
+First you need to make sure you have the right .env.template.j2 file, this should have been provided to you.
+Next you need to add the hostname of the target machine to the inventory.yaml file
+
+After that, you can run the playbook with the following command
+```shell
+ansible-playbook -i inventory.yaml playbook.yaml -K
 ```
-sudo ansible-playbook -i inventory.yaml install_playbook.yaml
+To check if the playbook worked, you can ssh into the target machine and run this command
+```shell
+sudo systemctl status collector
 ```
+This should say running.
 
 ## Add your files
 
