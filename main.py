@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import time
 import collector
 import elasticSearch
+import os
 
 
 def main():
@@ -13,7 +14,7 @@ def main():
     # client.delete(index="metric_clone",id="WRLg9CiKQoqcIMtxinW2fA")
     print(client.info())
     col = collector.Collector()
-    index = "metric_clone"
+    index = "collector_" + os.uname()[1].lower()
 
     # Uncomment line bellow to delete contents of the index and recreate
     # the index with selected name before sending data to it.

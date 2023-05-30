@@ -1,0 +1,25 @@
+---
+- name: Installing the monitoring software
+  hosts: localhost
+  connection: local
+    - name: Add the beats repository to apt
+      ansible.builtin.apt_key:
+        url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        state: present
+    - name: Install metricbeat
+      ansible.builtin.apt:
+          name: metricbeat
+    - name: Edit the metricbeat.yml to connect it to kibana and elastic search
+      template:
+        src: metricbeat.yml.j2
+        dest: /etc//metricbeat.yml
+    - name: Enable the metricbeat service
+      ansibel.builtin.systemd:
+        name: metricbeat
+        enabled: true
+      become: true
+    - name: Run metricbeats
+      ansible.builtin.shell: metricbeat setup
+  tasks:
+
+...

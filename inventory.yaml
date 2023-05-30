@@ -2,7 +2,7 @@ all:
   hosts:
       localhost:
   vars:
-    access_token: token
-    token_name: token
+    access_token: 1yCLQp6u-byX-HyreMmn
+    token_name: Quentin-Raspberry-PI
     gitlab_address:
       gitlab.ewi.tudelft.nl/cse2000-software-project/2022-2023-q4/cluster-12/ruisdael-automatic-network-monitoring-system/ruisdael-elk-client.git
