@@ -22,6 +22,7 @@ class Collector:
         self.update_delay = update_delay
         self.old_bytes_sent = 0
         self.old_bytes_rec = 0
+        self.loc = Nominatim(user_agent="GetLoc").geocode(os.getenv('LOCATION'))
 
     def collect(self):
         """
@@ -41,7 +42,7 @@ class Collector:
         io = psutil.net_io_counters()
         sent, rec = io.bytes_sent, io.bytes_recv
         # Geolocation of the device (address taken from the .env file)
-        loc = Nominatim(user_agent="GetLoc").geocode(os.getenv('LOCATION'))
+
         print(datetime.now())
         # Dictionary containing all wanted data
         data = {'RAM.total': ram[0],  # B(ytes)
@@ -59,7 +60,7 @@ class Collector:
                 'upload.speed': (sent - self.old_bytes_sent) / self.update_delay,  # B/s
                 'download.speed': (rec - self.old_bytes_rec) / self.update_delay,  # B/s
                 '@timestamp': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
-                'location': [loc.longitude, loc.latitude]
+                'location': [self.loc.longitude, self.loc.latitude]
                 }
 
         # Reset old values of network input/output for later computations of throughput.
