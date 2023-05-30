@@ -41,7 +41,8 @@ def main():
             i = 0
         except Exception as e:
             i += 1
-            print("An exception occurred, this has happened " + str(i) + "in a row. The exception is: "  + str (e))
+            print("An exception occurred, this has happened " + str(i)
+                  + "in a row. The exception is: "  + str (e))
 
 
 # Press the green button in the gutter to run the script.
