@@ -18,5 +18,12 @@
       ansible.builtin.cron:
         name: "Monitoring software"
         special_time: reboot
-        job: "/bin/monitoring/ruisdael-elk-client/main.py"
+        job: "/bin/monitoring/main.py"
 
+    - name: install the requirements
+      ansible.builtin.pip:
+        requirements: "/bin/monitoring/requirements.txt"
+
+    - name: start the application
+      command:  "python3 /bin/monitoring/main.py"
+...

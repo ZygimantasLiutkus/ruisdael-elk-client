@@ -4,9 +4,11 @@
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+To install this software you need to run the playbook.yaml with ansible targeting the host on which you wish to install the software.
+You can run this playbook with the folowing command
+```
+sudo ansible-playbook -i inventory.yaml install_playbook.yaml
+```
 
 ## Add your files
 
