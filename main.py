@@ -33,9 +33,16 @@ def main():
 
         print(elasticSearch.create_index(client, index, mappings))
 
-    while True:
-        print(elasticSearch.send_data(client, index, col.collect()))
-        time.sleep(5)
+    i = 0
+    while i < 5:
+        try:
+            print(elasticSearch.send_data(client, index, col.collect()))
+            time.sleep(5)
+            i = 0
+        except Exception as e:
+            i += 1
+            print("An exception occurred, this has happened " + str(i)
+                  + "in a row. The exception is: "  + str (e))
 
 
 # Press the green button in the gutter to run the script.
