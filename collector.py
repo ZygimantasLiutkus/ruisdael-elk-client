@@ -40,7 +40,8 @@ class Collector:
         io = psutil.net_io_counters()
         sent, rec = io.bytes_sent, io.bytes_recv
         # Device details parsed from the ruisdael_instrument_details.yml file.
-        device_details = yaml.safe_load(open('/etc/ruisdael_instrument_details.yml').read())
+        device_details = yaml.safe_load(
+            open('/etc/ruisdael_instrument_details.yml').read())
         # Dictionary containing all wanted data
         data = {'RAM.total': ram[0],  # B(ytes)
                 'RAM.available': ram[1],  # B
@@ -57,7 +58,8 @@ class Collector:
                 'upload.speed': (sent - self.old_bytes_sent) / self.update_delay,  # B/s
                 'download.speed': (rec - self.old_bytes_rec) / self.update_delay,  # B/s
                 '@timestamp': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
-                'location.coordinates': [device_details['longitude'], device_details['latitude']],
+                'location.coordinates': [device_details['longitude'],
+                                         device_details['latitude']],
                 'location.elevation': device_details['elevation'],   # String
                 'instrument.name': device_details['instrument_name'],
                 'location.name': device_details['location'],
