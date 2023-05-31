@@ -1,7 +1,6 @@
 import psutil
-import os
 from datetime import datetime
-from geopy.geocoders import Nominatim
+import yaml
 
 
 class Collector:
@@ -22,7 +21,6 @@ class Collector:
         self.update_delay = update_delay
         self.old_bytes_sent = 0
         self.old_bytes_rec = 0
-        self.loc = Nominatim(user_agent="GetLoc").geocode(os.getenv('LOCATION'))
 
     def collect(self):
         """
@@ -41,9 +39,8 @@ class Collector:
         # Network usage parameters
         io = psutil.net_io_counters()
         sent, rec = io.bytes_sent, io.bytes_recv
-        # Geolocation of the device (address taken from the .env file)
-
-        print(datetime.now())
+        # Device details parsed from the ruisdael_instrument_details.yml file.
+        device_details = yaml.safe_load(open('/etc/ruisdael_instrument_details.yml').read())
         # Dictionary containing all wanted data
         data = {'RAM.total': ram[0],  # B(ytes)
                 'RAM.available': ram[1],  # B
@@ -60,7 +57,11 @@ class Collector:
                 'upload.speed': (sent - self.old_bytes_sent) / self.update_delay,  # B/s
                 'download.speed': (rec - self.old_bytes_rec) / self.update_delay,  # B/s
                 '@timestamp': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
-                'location': [self.loc.longitude, self.loc.latitude]
+                'location.coordinates': [device_details['longitude'], device_details['latitude']],
+                'location.elevation': device_details['elevation'],   # String
+                'instrument.name': device_details['instrument_name'],
+                'location.name': device_details['location'],
+                'instrument.type': device_details['instrument_type']
                 }
 
         # Reset old values of network input/output for later computations of throughput.

@@ -24,7 +24,7 @@ def main():
         mappings = {
             "mappings": {
                 "properties": {
-                    "location": {
+                    "location.coordinates": {
                         "type": "geo_point"
                     }
                 }
