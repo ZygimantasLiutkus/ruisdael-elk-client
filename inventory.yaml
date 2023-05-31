@@ -1,6 +1,6 @@
 all:
   hosts:
-      localhost:
+    davis.gv:
   vars:
     access_token: 1yCLQp6u-byX-HyreMmn
     token_name: Quentin-Raspberry-PI

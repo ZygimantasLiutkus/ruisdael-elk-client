@@ -24,7 +24,7 @@ def main():
         mappings = {
             "mappings": {
                 "properties": {
-                    "location": {
+                    "location.coordinates": {
                         "type": "geo_point"
                     }
                 }
@@ -34,8 +34,11 @@ def main():
         print(elasticSearch.create_index(client, index, mappings))
 
     while True:
-        print(elasticSearch.send_data(client, index, col.collect()))
-        time.sleep(5)
+        try:
+            print(elasticSearch.send_data(client, index, col.collect()))
+            time.sleep(60)
+        except Exception as e:
+            print("An exception occurred: "  + str (e))
 
 
 # Press the green button in the gutter to run the script.

@@ -1,0 +1,11 @@
+[Unit]
+Description = Collects and sends data to elastic search
+After = network.target
+
+[Service]
+Type = simple
+ExecStart = python3 /bin/monitoring/main.py
+TimeoutStartSec = infinity
+
+[Install]
+WantedBy = multi-user.target
