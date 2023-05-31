@@ -44,7 +44,7 @@ To contribute to the software, you should be aware of what the files and modules
 The `main.py` module contains the index configuration and is responsible for the actual sending of data to the
 Elasticsearch host. An index can be reset (deleted if it exists) by uncommenting line 21. The `mappings` dictionary contains
 the properties that you want the index to have, for e.g., now it is configured to recognize the location property
-among the sent data. Lastly, the `time.sleep(n)` makes the timeout between sending be n seconds.
+among the send data. Lastly, the `time.sleep(n)` makes the timeout between sending be n seconds.
 
 The `elasticSearch.py` module creates the connection to Elasticsearch and an index. It also has a 
 function which sends the given data to the Elasticsearch host.
