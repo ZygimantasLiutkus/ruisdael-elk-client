@@ -1,0 +1,28 @@
+---
+- name: Uninstall the monitoring software
+  hosts: all
+  tasks:
+    - name: stop the service
+      ansible.builtin.systemd:
+        name: collector
+        state: stopped
+      become: true
+
+    - name: disable the service
+      ansible.builtin.systemd:
+        name: collector
+        enabled: false
+      become: true
+
+    - name: delete the service file
+      ansible.builtin.file:
+        state: absent
+        path: /etc/systemd/system/collector.service
+      become: true
+
+    - name: delete the git folder
+      ansible.builtin.file:
+        state: absent
+        path: /bin/monitoring
+      become: true
+...

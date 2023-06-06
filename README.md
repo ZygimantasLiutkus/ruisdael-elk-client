@@ -21,6 +21,11 @@ sudo systemctl status collector
 ```
 This should say running.
 
+To uninstall the software you can run the following ansible, you need to change the hosts you want to target beforehand in the inventory file
+```shell
+ansible-playbook -i inventory.yaml uninstall_playbook.yaml -K
+```
+
 ## Usage
 
 After the software is started/run, it will automatically begin to send data to the specified elasticsearch host.
