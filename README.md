@@ -1,11 +1,15 @@
 # ruisdael-elk-client
 
+This git repository contains software that collects data form different nodes and sends it to a preconfigured elastic server.
+To install this software, there is an installation script and an uninstallation script. 
+If you don't want to use our software, you can also use metricbeat, for which there also is an installation and uninstallation script
 
 
 ## Getting started
 
 To install this software you need to run the playbook.yaml with ansible targeting the host on which you wish to install the software.
-You need root access on the target machine to execute the playbook successfully.
+You need root access on the target machine to execute the playbook successfully. 
+The playbook clones this repository and changes some settings on the target device. 
 
 First you need to make sure you have the right .env.template.j2 file, this should have been provided to you.
 You will need to configure the file with corresponding information in corresponding fields.
@@ -25,6 +29,28 @@ To uninstall the software you can run the following ansible, you need to change 
 ```shell
 ansible-playbook -i inventory.yaml uninstall_playbook.yaml -K
 ```
+
+## Installing metricbeat
+
+If you don't want to use our custom software, there is an installation script for installing metricbeat. To execute it, make sure you use the provided inventory_metric_beats.yaml file
+
+You can run the installation script with the following command.
+```shell
+ansible-playbook -i inventory_metric_beats.yaml install_metricbeats_playbook.yaml -K
+```
+To change on which machines the ansible is executed, you can change the hosts in the inventory_metric_beats.yaml file
+
+To check if the playbook worked, you can ssh into the target machine and run this command
+```shell
+sudo systemctl status metricbeat
+```
+This should say running.
+
+To uninstall metricbeat, you can run this command.
+```shell
+ansible-playbook -i inventory_metric_beats.yaml uninstall_metricbeats_playbook.yaml -K
+```
+It uses the same inventory file.
 
 ## Usage
 
