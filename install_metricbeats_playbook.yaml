@@ -1,25 +1,44 @@
 ---
 - name: Installing the monitoring software
-  hosts: localhost
-  connection: local
+  gather_facts: yes
+  hosts: all
+  tasks:
+    - name: Add "systemd=true" is in section "[boot]" in wsl.conf file to enable systemd
+      community.general.ini_file:
+        path: /etc/wsl.conf
+        section: boot
+        option: systemd
+        value: true
+        state: present
+        backup: true
+      when: '"WSL" in ansible_kernel'
+      register: changeWSLConf
+      become: true
+    - name: Conditionally reboot the machine if the previous step modified the wsl.conf file
+      ansible.builtin.reboot:
+      when: changeWSLConf.changed
     - name: Add the beats repository to apt
       ansible.builtin.apt_key:
         url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
         state: present
+      become: true
     - name: Install metricbeat
       ansible.builtin.apt:
           name: metricbeat
+      become: true
     - name: Edit the metricbeat.yml to connect it to kibana and elastic search
       template:
         src: metricbeat.yml.j2
         dest: /etc//metricbeat.yml
+      become: true
     - name: Enable the metricbeat service
-      ansibel.builtin.systemd:
+      ansible.builtin.systemd:
         name: metricbeat
         enabled: true
       become: true
     - name: Run metricbeats
-      ansible.builtin.shell: metricbeat setup
-  tasks:
-
+      ansible.builtin.systemd:
+        name: metricbeat
+        state: started
+      become: true
 ...

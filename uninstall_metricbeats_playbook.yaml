@@ -1,0 +1,25 @@
+---
+- name: Installing the monitoring software
+  hosts: all
+  tasks:
+    - name: Get the list of services
+      service_facts:
+    - name: Delete metricbeat
+      ansible.builtin.apt:
+          name: metricbeat
+          state: absent
+      become: true
+    - name: stop metricbeats
+      ansible.builtin.systemd:
+        name: metricbeat
+        state: stopped
+      when: "'metricbeat.service' in services"
+      become: true
+    - name: Disable the metricbeat service
+      ansible.builtin.systemd:
+        name: metricbeat
+        enabled: false
+      when: "'metricbeat.service' in services"
+      become: true
+
+...
