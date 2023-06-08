@@ -2,6 +2,20 @@
 - name: Installing the monitoring software
   hosts: all
   tasks:
+    - name: Add "systemd=true" is in section "[boot]" in wsl.conf file to enable systemd
+      community.general.ini_file:
+        path: /etc/wsl.conf
+        section: boot
+        option: systemd
+        value: true
+        state: present
+        backup: true
+      when: '"WSL" in ansible_kernel'
+      register: changeWSLConf
+      become: true
+    - name: Conditionally reboot the machine if the previous step modified the wsl.conf file
+      ansible.builtin.reboot:
+      when: changeWSLConf.changed
     - name: clone gitlab directory
       git:
         repo: https://{{token_name}}:{{access_token}}@{{gitlab_address}}
