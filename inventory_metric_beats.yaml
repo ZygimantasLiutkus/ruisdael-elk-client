@@ -1,6 +1,6 @@
 all:
   hosts:
-      localhost:
+      ruisdael-office01:
   vars:
     elastic_password: iFNywNQNuNtq4gPuROhV
     elastic_url: 10.0.0.24:9200

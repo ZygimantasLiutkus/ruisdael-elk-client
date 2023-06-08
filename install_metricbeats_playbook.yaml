@@ -3,7 +3,7 @@
   gather_facts: yes
   hosts: all
   tasks:
-    - name: Add "systemd=true" is in section "[boot]" in specified file
+    - name: Add "systemd=true" is in section "[boot]" in wsl.conf file to enable systemd
       community.general.ini_file:
         path: /etc/wsl.conf
         section: boot
@@ -12,10 +12,11 @@
         state: present
         backup: true
       when: '"WSL" in ansible_kernel'
+      register: changeWSLConf
       become: true
     - name: Unconditionally reboot the machine with all defaults
       ansible.builtin.reboot:
-      when: '"WSL" in ansible_kernel'
+      when: changeWSLConf.changed
     - name: Add the beats repository to apt
       ansible.builtin.apt_key:
         url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
