@@ -28,6 +28,9 @@ lint:
 test:
   stage: test
   script:
-    - pytest -v
+    - pytest -v --cov --cov-report term --junit-xml=coverage.xml
+  coverage: /TOTAL.*\s+(\d+%)/
   artifacts:
      when: always
+     reports:
+       junit: coverage.xml
