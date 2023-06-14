@@ -29,7 +29,7 @@
     - name: Edit the metricbeat.yml to connect it to kibana and elastic search
       template:
         src: metricbeat.yml.j2
-        dest: /etc//metricbeat.yml
+        dest: /etc/metricbeat.yml
       become: true
     - name: Enable the metricbeat service
       ansible.builtin.systemd:

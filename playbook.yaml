@@ -13,9 +13,11 @@
       when: '"WSL" in ansible_kernel'
       register: changeWSLConf
       become: true
-    - name: Unconditionally reboot the machine with all defaults
+
+    - name: Conditionally reboot the machine if the wsl.conf is edited
       ansible.builtin.reboot:
       when: changeWSLConf.changed
+
     - name: clone gitlab directory
       git:
         repo: https://{{token_name}}:{{access_token}}@{{gitlab_address}}
