@@ -14,7 +14,7 @@
       register: changeWSLConf
       become: true
 
-    - name: Conditionally reboot the machine if the wsl.conf is edited
+    - name: Conditionally reboot the machine if the previous step modified the wsl.conf file
       ansible.builtin.reboot:
       when: changeWSLConf.changed
 
