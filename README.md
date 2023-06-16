@@ -3,9 +3,14 @@
 This git repository contains software that collects data form different nodes and sends it to a preconfigured elastic server.
 To install this software, there is an installation script and an uninstallation script. 
 If you don't want to use our software, you can also use metricbeat, for which there also is an installation and uninstallation script
+These 2 programs are independent of each-other.
 
+## Installing custom collector
 
-## Getting started
+This directory includes a collector that sends data to elastic search. This chapter will go into more detail on how to install it.
+Firstly it covers the automatic installations via ansible, and the second part has a manual installation.
+
+### Automatic installation
 
 To install this software you need to run the playbook.yaml with ansible targeting the host on which you wish to install the software.
 You need root access on the target machine to execute the playbook successfully. 
@@ -28,6 +33,41 @@ This should say running.
 To uninstall the software you can run the following ansible, you need to change the hosts you want to target beforehand in the inventory file
 ```shell
 ansible-playbook -i inventory.yaml uninstall_playbook.yaml -K
+```
+
+### Manual installation
+
+If you are trying to install on a Windows machine running WSL, you need to add the following line to /etc/wsl.conf to enable systemd.
+```ini
+[boot]
+systemd=true
+```
+After adding this line a reboot is required. 
+
+Next you need to clone this directory to the target machine, this can be done with the following command:
+```shell
+git clone https://gitlab.ewi.tudelft.nl/cse2000-software-project/2022-2023-q4/cluster-12/ruisdael-automatic-network-monitoring-system/ruisdael-elk-client.git
+```
+
+The collector needs some project specific passwords and configurations, these are stored in a .env file. There is a template you can use to create this file .env.template.j2
+
+There are also some dependencies you can install by running 
+```shell
+pip3 install -r requirements.txt
+```
+
+Now the collector is able to run, you can run it via 
+```shell
+python3 main.py
+```
+
+If you want the program to start after a reboot, you need to create a service.
+To achieve this, you need to copy the contents of collector.service.j2 to /etc/systemd/system/collector.service, and change the path on line 3 to where you cloned the repository.
+
+To enable ths service to run at startup, and start the service you need the following commands
+```shell
+sudo systemctl enable collector
+sudo systemctl start collector
 ```
 
 ## Installing metricbeat
