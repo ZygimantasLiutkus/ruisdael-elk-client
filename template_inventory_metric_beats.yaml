@@ -1,0 +1,8 @@
+all:
+  hosts:
+       [[ hosts ]]
+  vars:
+    elastic_password: [[ password of the elastic user]]
+    elastic_url: [[ url to the elasticsearch server ]]
+    elastic_ca_fingerprint: [[ ca fingerprint of the elastic server]]
+    kibana_url: [[ url to the kibana server ]]

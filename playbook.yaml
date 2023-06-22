@@ -26,12 +26,13 @@
 
     - name: add the .env with the right values
       template:
-        src: .env.template.j2
+        src: .env.j2
         dest: /bin/monitoring/.env
       become: true
 
     - name: Install pip3, to install the requirements
       ansible.builtin.apt:
+        update_cache: true
         name: python3-pip
         state: present
       become: true
