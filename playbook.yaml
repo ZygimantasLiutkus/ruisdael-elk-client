@@ -13,9 +13,11 @@
       when: '"WSL" in ansible_kernel'
       register: changeWSLConf
       become: true
+
     - name: Conditionally reboot the machine if the previous step modified the wsl.conf file
       ansible.builtin.reboot:
       when: changeWSLConf.changed
+
     - name: clone gitlab directory
       git:
         repo: https://{{token_name}}:{{access_token}}@{{gitlab_address}}
@@ -24,12 +26,13 @@
 
     - name: add the .env with the right values
       template:
-        src: .env.template.j2
+        src: .env.j2
         dest: /bin/monitoring/.env
       become: true
 
     - name: Install pip3, to install the requirements
       ansible.builtin.apt:
+        update_cache: true
         name: python3-pip
         state: present
       become: true

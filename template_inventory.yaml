@@ -1,0 +1,11 @@
+all:
+  hosts:
+    [[ hosts ]]
+  vars:
+    access_token: [[ git access token to clone the git repository]]
+    token_name: [[ name of the token ]]
+    gitlab_address:
+      gitlab.ewi.tudelft.nl/cse2000-software-project/2022-2023-q4/cluster-12/ruisdael-automatic-network-monitoring-system/ruisdael-elk-client.git
+    elastic_password: [[ password of the elastic user]]
+    elastic_url: [[ url to the elasticsearch server ]]
+    elastic_ca_fingerprint: [[ ca fingerprint of the elastic server]]
