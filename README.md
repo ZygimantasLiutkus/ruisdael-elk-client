@@ -5,6 +5,10 @@ To install this software, there is an installation script and an uninstallation 
 If you don't want to use our software, you can also use metricbeat, for which there also is an installation and uninstallation script
 These 2 programs are independent of each-other.
 
+Once the software is installed on a new instrument with correct configurations, it 
+can be polled from Elasticsearch to be shown in the Kibana and will automatically 
+appear in the [web UI created to work together with this software](https://gitlab.ewi.tudelft.nl/cse2000-software-project/2022-2023-q4/cluster-12/ruisdael-automatic-network-monitoring-system/ruisdael-elk-client).
+
 ## Installing custom collector
 
 This directory includes a collector that sends data to elastic search. This chapter will go into more detail on how to install it.
